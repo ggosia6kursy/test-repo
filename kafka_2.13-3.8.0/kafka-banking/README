@@ -1,0 +1,28 @@
+Cwiczenie na z Kawką:
+Prosta aplikacja do zlecania i wykonywania płatności. Komunikacja ralizowana jest za pomocą brokera wiadomości Kafka:
+
+
+Aplikacja 1:
+  - Wystawia zlecenie na płatność na X.
+     Model zlecenia:
+       - Kwota
+       - Konto płatnika
+       - Konto odbiorcy
+       - Id zlecennia
+  - Aplikacja odbiera eventy o stanie płatoności i zapisuje akualny stan zlecenia
+  - Jeżeli osiągniemy stan terminalny (success, fail) a pojawi się jakiś event dotyczący zlecenia zapisac wystąpienie takiej sytuacji
+
+
+Aplikacja 2:
+- Odbiera zlecenia płatoności i je przetwarza:
+   Krok 1:
+     - Wysłanie eventu o przyjęciu zlecenia
+     - Walidacja czy podane konta istnieją
+     - Walidacja saldo płatnika jest ok
+     - Jak walidacja jest ok Wsyłanie eventu o rozpoczęciu realizacjci zlecenia
+     - Jak walidacja nie przejdzeio wysłanie eventu o odrzuceniu płatności
+     - Realizacja płatności
+     - Jak wszystko ok wysłanie eventu success
+Co należy zrobić:
+  - Zaprojektować topiki jakie są niezbędne do realizacji zadania. Topik powinien mieć przynajmnie 3 partycje
+  - Zaproponować odpowieni klucz wiadomosci aby zachować odpowiednią kolejność eventów
