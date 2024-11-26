@@ -1,15 +1,14 @@
-package kafka.bank.payment;
+package kafka.bank.domain.payment;
 
-import kafka.bank.accounts.Account;
-import kafka.bank.accounts.AccountRepository;
-import kafka.bank.payment.operationlog.OperationLog;
-import kafka.bank.payment.operationlog.OperationLogSender;
-import kafka.bank.payment.request.PaymentRequest;
+import kafka.bank.domain.account.Account;
+import kafka.bank.domain.account.AccountRepository;
+import kafka.bank.domain.payment.operationlog.OperationLog;
+import kafka.bank.domain.payment.operationlog.OperationLogSender;
+import kafka.bank.domain.payment.request.PaymentRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -52,6 +51,7 @@ class PaymentProcessorImpl implements PaymentProcessor {
         if (totalAfter.compareTo(totalBefore) > 0) {
             log.warn("Balance do not match!!");
         }
+
         BigDecimal currentTotalAmount = accountRepository.getAllAccountIds().stream()
                 .map(accountRepository::getAccount)
                 .map(Account::getBalance)

@@ -1,4 +1,4 @@
-package kafka.bank.accounts;
+package kafka.bank.domain.account;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.Map;
 public interface AccountRepository extends AccountListing {
 
     Account getAccount(String id);
+
+
 
     static AccountRepository getRepo() {
         return AccountRepositoryInMemory.getInstance();

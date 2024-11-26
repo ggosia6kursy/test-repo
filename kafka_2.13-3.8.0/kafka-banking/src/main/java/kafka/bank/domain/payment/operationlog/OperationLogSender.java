@@ -1,4 +1,4 @@
-package kafka.bank.payment.operationlog;
+package kafka.bank.domain.payment.operationlog;
 
 public interface OperationLogSender {
 

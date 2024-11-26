@@ -1,4 +1,4 @@
-package kafka.bank.accounts;
+package kafka.bank.domain.account;
 
 import java.util.List;
 

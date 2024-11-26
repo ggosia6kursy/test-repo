@@ -1,10 +1,8 @@
-package kafka.bank;
-
-import org.apache.kafka.clients.producer.ProducerConfig;
+package kafka.bank.infra;
 
 import java.util.Properties;
 
-public class PaymentConstants {
+class KafkaConfig {
 
     // Kafka Topics
     public static final String REQUEST_KAFKA_TOPIC = "payment-request";

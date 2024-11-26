@@ -1,8 +1,9 @@
 package kafka.bank;
 
-import kafka.bank.accounts.AccountListing;
+import kafka.bank.domain.account.AccountListing;
+import kafka.bank.domain.payment.PaymentInitiator;
+import kafka.bank.domain.payment.request.RequestSender;
 import kafka.bank.infra.KafkaRequestSender;
-import kafka.bank.payment.request.RequestSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +23,14 @@ public class MainProducer {
         AccountListing repo = AccountListing.get();
         RequestSender sender = KafkaRequestSender.buildSender();
         PaymentInitiator paymentInitiator = new PaymentInitiator(repo, sender);
-        logger.info("Sending request");
+        Thread.sleep(1000);
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            logger.info("Press enter to send a message");
+            logger.info("Press enter to send a message, or write \"exit\" to quit...");
             String input = scanner.nextLine();
+            if (input.equals("exit")) {
+                break;
+            }
             paymentInitiator.initiateOperation();
         }
     }

@@ -1,4 +1,4 @@
-package kafka.bank.payment.request;
+package kafka.bank.domain.payment.request;
 
 import lombok.Builder;
 

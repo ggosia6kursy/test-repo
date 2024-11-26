@@ -1,10 +1,10 @@
 package kafka.bank;
 
-import kafka.bank.accounts.AccountRepository;
+import kafka.bank.domain.account.AccountRepository;
 import kafka.bank.infra.KafkaLoopConsumer;
 import kafka.bank.infra.KafkaOperationLogSender;
-import kafka.bank.payment.PaymentProcessor;
-import kafka.bank.payment.operationlog.OperationLogSender;
+import kafka.bank.domain.payment.PaymentProcessor;
+import kafka.bank.domain.payment.operationlog.OperationLogSender;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

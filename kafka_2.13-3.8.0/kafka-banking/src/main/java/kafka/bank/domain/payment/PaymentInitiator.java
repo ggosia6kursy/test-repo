@@ -1,9 +1,8 @@
-package kafka.bank;
+package kafka.bank.domain.payment;
 
-import kafka.bank.accounts.AccountListing;
-import kafka.bank.accounts.AccountRepository;
-import kafka.bank.payment.request.PaymentRequest;
-import kafka.bank.payment.request.RequestSender;
+import kafka.bank.domain.account.AccountListing;
+import kafka.bank.domain.payment.request.PaymentRequest;
+import kafka.bank.domain.payment.request.RequestSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

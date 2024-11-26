@@ -1,9 +1,7 @@
 package kafka.bank.infra;
 
-import kafka.bank.PaymentConstants;
-import kafka.bank.payment.operationlog.OperationLog;
-import kafka.bank.payment.operationlog.OperationLogSender;
-import kafka.bank.payment.request.RequestSender;
+import kafka.bank.domain.payment.operationlog.OperationLog;
+import kafka.bank.domain.payment.operationlog.OperationLogSender;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -12,7 +10,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import static kafka.bank.PaymentConstants.INITIATOR_PROPS;
+import static kafka.bank.infra.KafkaConfig.INITIATOR_PROPS;
 
 @Slf4j
 public class KafkaOperationLogSender implements OperationLogSender {
@@ -29,7 +27,7 @@ public class KafkaOperationLogSender implements OperationLogSender {
 
     @Override
     public void send(OperationLog request) {
-        Future<RecordMetadata> sent = producer.send(new ProducerRecord<>(PaymentConstants.OPERATION_LOG_KAFKA_TOPIC, request.id().toString(), request));
+        Future<RecordMetadata> sent = producer.send(new ProducerRecord<>(KafkaConfig.OPERATION_LOG_KAFKA_TOPIC, request.id().toString(), request));
         try {
             RecordMetadata recordMetadata = sent.get();
             log.info("Successfully send {}", recordMetadata);

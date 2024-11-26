@@ -1,8 +1,8 @@
-package kafka.bank.payment;
+package kafka.bank.domain.payment;
 
-import kafka.bank.accounts.AccountRepository;
-import kafka.bank.payment.operationlog.OperationLogSender;
-import kafka.bank.payment.request.PaymentRequest;
+import kafka.bank.domain.account.AccountRepository;
+import kafka.bank.domain.payment.operationlog.OperationLogSender;
+import kafka.bank.domain.payment.request.PaymentRequest;
 
 public interface PaymentProcessor {
 

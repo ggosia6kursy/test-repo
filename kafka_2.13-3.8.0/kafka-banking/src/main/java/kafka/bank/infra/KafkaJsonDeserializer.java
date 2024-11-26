@@ -5,9 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
-import kafka.bank.PaymentConstants;
-import kafka.bank.payment.operationlog.OperationLog;
-import kafka.bank.payment.request.PaymentRequest;
+import kafka.bank.domain.payment.operationlog.OperationLog;
+import kafka.bank.domain.payment.request.PaymentRequest;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.time.LocalDateTime;
@@ -38,9 +37,9 @@ public class KafkaJsonDeserializer<T> implements Deserializer<T> {
     @Override
     public T deserialize(String topic, byte[] payload) {
         String s = new String(payload);
-        if (topic.equals(PaymentConstants.REQUEST_KAFKA_TOPIC)) {
+        if (topic.equals(KafkaConfig.REQUEST_KAFKA_TOPIC)) {
             return (T) GSON.fromJson(s, PaymentRequest.class);
-        } else if (topic.equals(PaymentConstants.OPERATION_LOG_KAFKA_TOPIC)) {
+        } else if (topic.equals(KafkaConfig.OPERATION_LOG_KAFKA_TOPIC)) {
             return (T) GSON.fromJson(s, OperationLog.class);
         }
         throw new IllegalArgumentException("Unknown topic " + topic);
