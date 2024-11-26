@@ -1,5 +1,7 @@
 package kafka.bank;
 
+import org.apache.kafka.clients.producer.ProducerConfig;
+
 import java.util.Properties;
 
 public class PaymentConstants {
@@ -19,7 +21,7 @@ public class PaymentConstants {
         PROCESSOR_PROPS.put("auto.offset.reset", "earliest");
         PROCESSOR_PROPS.put("enable.auto.commit", "true");
         PROCESSOR_PROPS.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        PROCESSOR_PROPS.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        PROCESSOR_PROPS.put("value.deserializer", "kafka.bank.infra.KafkaJsonDeserializer");
     }
 
     public static final Properties INITIATOR_PROPS = new Properties();
@@ -27,6 +29,6 @@ public class PaymentConstants {
     static {
         INITIATOR_PROPS.put("bootstrap.servers", BOOTSTRAP_SERVERS);
         INITIATOR_PROPS.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        INITIATOR_PROPS.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        INITIATOR_PROPS.put("value.serializer", "kafka.bank.infra.KafkaJsonSerializer");
     }
 }
