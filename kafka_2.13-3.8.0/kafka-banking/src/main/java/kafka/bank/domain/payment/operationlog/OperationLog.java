@@ -10,7 +10,10 @@ import java.util.UUID;
 public record OperationLog(UUID id, OperationType type, String requestId, String description, LocalDateTime timestamp) {
 
     public enum OperationType {
+        REQUESTED,
+        ACCEPTED,
         SUCCESS,
+        REJECTED,
         FAIL
     }
 

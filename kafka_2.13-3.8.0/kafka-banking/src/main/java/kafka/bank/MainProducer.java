@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class MainProducer {
@@ -25,13 +28,25 @@ public class MainProducer {
         PaymentInitiator paymentInitiator = new PaymentInitiator(repo, sender);
         Thread.sleep(1000);
         Scanner scanner = new Scanner(System.in);
-        while (true) {
-            logger.info("Press enter to send a message, or write \"exit\" to quit...");
-            String input = scanner.nextLine();
-            if (input.equals("exit")) {
-                break;
+        try(ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            while (true) {
+                logger.info("Press enter to send a message, or write \"exit\" to quit...");
+                String input = scanner.nextLine();
+                if (input.equals("exit")) {
+                    break;
+                }
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
+                executor.submit(paymentInitiator::initiateOperation);
             }
-            paymentInitiator.initiateOperation();
-        }
+        };
+
     }
 }

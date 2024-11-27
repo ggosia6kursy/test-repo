@@ -8,8 +8,6 @@ public interface AccountRepository extends AccountListing {
 
     Account getAccount(String id);
 
-
-
     static AccountRepository getRepo() {
         return AccountRepositoryInMemory.getInstance();
     }
