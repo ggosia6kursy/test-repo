@@ -1,5 +1,6 @@
 package kafka.bank.domain.account;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ class AccountRepositoryInMemory implements AccountRepository {
                 "6789012345", new Account("6789012345"),
                 "7890123456", new Account("7890123456")
         );
+        this.accounts.values().forEach(i -> i.deposit(new BigDecimal(100)));
     }
 
     @Override

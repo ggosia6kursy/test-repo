@@ -18,11 +18,19 @@ class PaymentProcessorImpl implements PaymentProcessor {
 
     private final OperationLogSender operationLogSender;
 
-    private final BigDecimal totalAmount = new BigDecimal(800);
+    private final BigDecimal totalAmount;
 
     public PaymentProcessorImpl(AccountRepository accountRepository, OperationLogSender operationLogSender) {
         this.accountRepository = accountRepository;
         this.operationLogSender = operationLogSender;
+        this.totalAmount = getAllMoney(accountRepository);
+    }
+
+    private BigDecimal getAllMoney(AccountRepository accountRepository) {
+        return accountRepository.getAllAccountIds().stream()
+                .map(accountRepository::getAccount)
+                .map(Account::getBalance)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public void process(PaymentRequest paymentRequest) {
@@ -46,21 +54,11 @@ class PaymentProcessorImpl implements PaymentProcessor {
         payerAccount.withdraw(paymentRequest.cashAmount());
         recieverAccount.deposit(paymentRequest.cashAmount());
 
-        // Check if operation went as expected
-        BigDecimal totalAfter = recieverAccount.getBalance().add(payerAccount.getBalance());
-        if (totalAfter.compareTo(totalBefore) > 0) {
-            log.warn("Balance do not match!!");
-        }
-
-        BigDecimal currentTotalAmount = accountRepository.getAllAccountIds().stream()
-                .map(accountRepository::getAccount)
-                .map(Account::getBalance)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal currentTotalAmount = getAllMoney(accountRepository);
         // compare totalBefore and totalAfter
         if (totalAmount.compareTo(currentTotalAmount) != 0) {
             failRequest(paymentRequest);
-            throw new IllegalStateException("Invalid amount of money in balance " + currentTotalAmount);
+            throw new IllegalStateException("Invalid amount of money in balance was " + totalAmount + currentTotalAmount);
         }
         successRequest(paymentRequest);
         accountRepository.getAllAccountIds().forEach(i -> log.info("Account Balance {}", accountRepository.getAccount(i)));

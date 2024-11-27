@@ -10,7 +10,13 @@ public class Account {
 
     private final String accountId;
 
-    private BigDecimal balance = new BigDecimal(100).setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.HALF_UP);
+
+
+    Account(String accountId, BigDecimal balance) {
+        this.accountId = accountId;
+        this.balance = balance.setScale(2, RoundingMode.HALF_UP);
+    }
 
     public Account(String accountId) {
         this.accountId = accountId;
