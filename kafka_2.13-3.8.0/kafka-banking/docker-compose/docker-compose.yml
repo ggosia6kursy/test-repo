@@ -13,16 +13,16 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - '9092:9092'
+      - '29092:29092'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9093,PLAINTEXT_HOST://localhost:29092,PLAINTEXT_OUT://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,PLAINTEXT_OUT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT_HOST://:29092,PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CREATE_TOPICS: "payment-request:3:1,operation-log:3:1"
-    command: sh -c "((sleep 15 && kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic payment-request)&) && /etc/confluent/docker/run ">
+    command: sh -c "((sleep 15 && kafka-topics --bootstrap-server localhost:29092 --create --replication-factor 1 --partitions 3 --topic payment-request)&) && /etc/confluent/docker/run ">
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -30,3 +30,6 @@ services:
       - 8080:8080
     environment:
       DYNAMIC_CONFIG_ENABLED: true
+      SPRING_CONFIG_ADDITIONAL-LOCATION: /config.yml
+    volumes:
+      - ./ui-config.yml:/config.yml

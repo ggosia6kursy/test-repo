@@ -1,11 +1,4 @@
-yamlApplicationConfig:
-  kafka:
+kafka:
     clusters:
       - name: Payment
-        bootstrapServers:  kafka:29092
-  auth:
-    type: disabled
-  management:
-    health:
-      ldap:
-        enabled: false
+        bootstrapServers:  kafka:9092
