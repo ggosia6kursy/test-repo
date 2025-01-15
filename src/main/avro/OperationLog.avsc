@@ -1,0 +1,38 @@
+{
+  "namespace": "kafka.bank.avro",
+  "type": "record",
+  "name": "OperationLog",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "logicalType": "UUID"
+    },
+    {
+      "name": "type",
+      "type": {
+        "type": "enum",
+        "name": "OperationType",
+        "symbols": [
+          "ACCEPT",
+          "PROCESSING",
+          "SUCCESS",
+          "FAIL"
+        ],
+        "default": "FAIL"
+      }
+    },
+    {
+      "name": "requestId",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    }
+  ]
+}

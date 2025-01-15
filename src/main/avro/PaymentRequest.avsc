@@ -1,0 +1,33 @@
+{
+  "namespace": "kafka.bank.avro",
+  "type": "record",
+  "name": "PaymentRequest",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "logicalType": "UUID"
+    },
+    {
+      "name": "payerAccountNumber",
+      "type": "string"
+    },
+    {
+      "name": "receiverAccountNumber",
+      "type": "string"
+    },
+    {
+      "name": "cashAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 18,
+        "scale": 2
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "long"
+    }
+  ]
+}
